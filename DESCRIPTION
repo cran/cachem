@@ -1,5 +1,5 @@
 Package: cachem
-Version: 1.0.1
+Version: 1.0.2
 Title: Cache R Objects with Automatic Pruning
 Description: Key-value stores with automatic pruning. Caches can limit
     either their total size or the age of the oldest object (or both),
@@ -16,9 +16,9 @@ Imports: rlang, fastmap
 Suggests: testthat
 RoxygenNote: 7.1.1
 NeedsCompilation: yes
-Packaged: 2021-01-19 15:09:27 UTC; winston
+Packaged: 2021-02-03 19:37:28 UTC; winston
 Author: Winston Chang [aut, cre],
   RStudio [cph, fnd]
 Maintainer: Winston Chang <winston@rstudio.com>
 Repository: CRAN
-Date/Publication: 2021-01-21 17:20:17 UTC
+Date/Publication: 2021-02-03 20:00:02 UTC
