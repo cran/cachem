@@ -1,7 +1,7 @@
-242c043690d3e18ab21eb22c02bc274c *DESCRIPTION
+7912f110e676d1133d8c172cd2d16623 *DESCRIPTION
 9dcc09d5adf966f50ec6e33aaf1a9299 *LICENSE
 d04ed310118f0f6793fd21dded64e62c *NAMESPACE
-c3a204bc8291a5325306bca4e333c35c *NEWS.md
+c354d22d49de26b7dd4774cd83c98535 *NEWS.md
 986cfbbc1994d0c70bb7a542b3f18367 *R/cache-disk.R
 c383156e1c95d4f7f9abae78f5c7604c *R/cache-layered.R
 3c948fff07e1e70b85438f1bc6627915 *R/cache-memory.R
@@ -17,5 +17,5 @@ f0451920126d89d9838750df0aa6e54e *man/reexports.Rd
 765eec7841759471f91ac2f9926919c7 *src/cache.c
 2979e6fdec726696d457d35a2e0b6cd4 *src/init.c
 d47ea68deaedae789dac89cd959c4b33 *tests/testthat.R
-d215a3e2efa439a017d654c868ed4750 *tests/testthat/test-cache-disk.R
+78f05dac802da50036c0ade86e7780ba *tests/testthat/test-cache-disk.R
 8401b15d1a273fe09d66b3714e461c24 *tests/testthat/test-cache-mem.R
