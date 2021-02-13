@@ -107,14 +107,19 @@ if (is.key_missing(value)) {
 The reason for doing this (instead of calling `$exists(key)` and then
 `$get(key)`) is that for some storage backends, there is a potential
 race condition: the object could be removed from the cache between the
-`exists()` and `get()` calls. For example, if multiple R processes have
-`cache_disk`s that share the same directory, one process could remove an
-object from the cache in between the `exists()` and `get()` calls in
-another process, resulting in an error.
+`exists()` and `get()` calls. For example:
+
+-   If multiple R processes have `cache_disk`s that share the same
+    directory, one process could remove an object from the cache in
+    between the `exists()` and `get()` calls in another process,
+    resulting in an error.
+-   If you use a `cache_mem` with a `max_age`, it’s possible for an
+    object to be present when you call `exists()`, but for its age to
+    exceed `max_age` by the time `get()` is called. In that case, the
+    `get()` will return a `key_missing()` object.
 
 ``` r
-# Avoid this pattern! It is only safe with cache_mem(), but if your code allows
-# using other types of cache objects, it can result in a race condition.
+# Avoid this pattern, due to a potential race condition!
 if (m$exists(key)) {
   value <- m$get(key)
 }
@@ -413,9 +418,10 @@ if its age exceeds `max_age`, then it will be removed from the cache.
 ## Layered caches
 
 Multiple caches can be composed into a single cache, using
-`cache_layered()`. This can be used to create a multi-level cache. For
-example, we can create a layered cache with a very fast 100MB memory
-cache and a larger but slower 2GB disk cache:
+`cache_layered()`. This can be used to create a multi-level cache. (Note
+thate `cache_layered()` is currently experimental.) For example, we can
+create a layered cache with a very fast 100MB memory cache and a larger
+but slower 2GB disk cache:
 
 ``` r
 m <- cache_mem(max_size = 100 * 1024^2)
