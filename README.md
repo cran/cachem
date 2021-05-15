@@ -68,10 +68,10 @@ m$set("abc123", c("Hello", "world"))
 m$set("xyz", function() message("Goodbye"))
 ```
 
-The `key` must be a string consisting of lowercase letters and numbers.
-(Upper-case characters are not allowed because some storage backends do
-not distinguish between lowercase and uppercase letters.) The `value`
-can be any R object.
+The `key` must be a string consisting of lowercase letters, numbers, and
+the underscore (`_`) and hyphen (`-`) characters. (Upper-case characters
+are not allowed because some storage backends do not distinguish between
+lowercase and uppercase letters.) The `value` can be any R object.
 
 Get the values with `$get()`:
 
@@ -336,10 +336,11 @@ Some optional methods:
 
 For these methods:
 
--   `key`: can be any string with numbers and lower-case letters. Some
-    storage backends may not be handle very long keys well. For example,
-    with a `cache_disk()`, the key is used as a filename, and on some
-    filesystems, very filenames may hit limits on path lengths.
+-   `key`: can be any string with lowercase letters, numbers, underscore
+    (`_`) and hyphen (`-`). Some storage backends may not be handle very
+    long keys well. For example, with a `cache_disk()`, the key is used
+    as a filename, and on some filesystems, very filenames may hit
+    limits on path lengths.
 -   `value`: can be any R object, with some exceptions noted below.
 
 #### Limitations of serialized objects
