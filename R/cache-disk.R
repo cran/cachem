@@ -135,6 +135,10 @@
 #'       Returns `TRUE` if the cache contains the key, otherwise
 #'       `FALSE`.
 #'     }
+#'     \item{`remove(key)`}{
+#'       Removes `key` from the cache, if it exists in the cache. If the key is
+#'       not in the cache, this does nothing.
+#'     }
 #'     \item{`size()`}{
 #'       Returns the number of items currently in the cache.
 #'     }
@@ -199,6 +203,11 @@ cache_disk <- function(
   warn_ref_objects = FALSE,
   logfile = NULL
 ) {
+  # ============================================================================
+  # Constants
+  # ============================================================================
+  PRUNE_THROTTLE_TIME_LIMIT <- 5
+
   # ============================================================================
   # Logging
   # ============================================================================
@@ -512,8 +521,8 @@ cache_disk <- function(
     # Count the number of times prune() has been called.
     prune_throttle_counter_ <<- prune_throttle_counter_ + 1
 
-    if (prune_throttle_counter_ > prune_rate_ ||
-        as.numeric(Sys.time()) - prune_last_time_ > 5)
+    if (prune_throttle_counter_ >= prune_rate_ ||
+        as.numeric(Sys.time()) - prune_last_time_ > PRUNE_THROTTLE_TIME_LIMIT)
     {
       prune()
       prune_throttle_counter_ <<- 0
