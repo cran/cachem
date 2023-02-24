@@ -16,7 +16,7 @@
 <!-- badges: start -->
 
 [![R build
-status](https://github.com/r-lib/cachem/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/cachem/actions)
+status](https://github.com/r-lib/cachem/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/cachem/actions)
 <!-- badges: end -->
 
 The **cachem** R package provides objects creating and managing caches.
@@ -201,7 +201,7 @@ object.size(m$get("b"))
 #> 800224 bytes
 ```
 
-For reference, lobstr::obj\_size can detect shared objects, and knows
+For reference, lobstr::obj_size can detect shared objects, and knows
 that these objects share most of their memory.
 
 ``` r
@@ -211,10 +211,10 @@ lobstr::obj_size(list(m$get("a"), m$get("b")))
 #> 800,408 B
 ```
 
-However, lobstr is not on CRAN, and if obj\_size() were used to find the
+However, lobstr is not on CRAN, and if obj_size() were used to find the
 incremental memory used when an object was added to the cache, it would
 have to walk all objects in the cache every time a single object is
-added. For these reasons, cache\_mem uses `object.size()` to compute the
+added. For these reasons, cache_mem uses `object.size()` to compute the
 object sizes.
 
 </details>
@@ -306,6 +306,37 @@ rm(d)
 gc()
 
 dir.exists(cachedir)
+```
+
+#### Using custom serialization functions
+
+It is possible to use custom serialization functions rather than the
+default of `writeRDS()` and `readRDS()` with the `write_fn`, `read_fn`
+and `extension` arguments respectively. This could be used to use
+alternative serialization formats like
+[qs](https://github.com/traversc/qs), or specialized object formats
+[fst](http://www.fstpackage.org/fst/) or parquet.
+
+``` r
+library(qs)
+#> qs v0.25.3.
+
+d <- cache_disk(read_fn = qs::qread, write_fn = qs::qsave, extension = ".qs")
+
+d$set("a", list(1, 2, 3))
+
+cachedir <- d$info()$dir
+dir(cachedir)
+#> [1] "a.qs"
+d$get("a")
+#> [[1]]
+#> [1] 1
+#> 
+#> [[2]]
+#> [1] 2
+#> 
+#> [[3]]
+#> [1] 3
 ```
 
 ## Cache API

@@ -16,7 +16,7 @@ cache_mem(
 \arguments{
 \item{max_size}{Maximum size of the cache, in bytes. If the cache exceeds
 this size, cached objects will be removed according to the value of the
-\code{evict}. Use \code{Inf} for no size limit. The default is 1 gigabyte.}
+\code{evict}. Use \code{Inf} for no size limit. The default is 512 megabytes.}
 
 \item{max_age}{Maximum age of files in cache before they are evicted, in
 seconds. Use \code{Inf} for no age limit.}
@@ -96,11 +96,7 @@ is \code{max_n}.
 
 If the size of the objects in the cache exceeds \code{max_size}, then objects
 will be removed from the cache. Objects will be removed from the cache so
-that the total size remains under \code{max_size}. Note that the size is
-calculated using the size of the files, not the size of disk space used by
-the files --- these two values can differ because of files are stored in
-blocks on disk. For example, if the block size is 4096 bytes, then a file
-that is one byte in size will take 4096 bytes on disk.
+that the total size remains under \code{max_size}.
 
 Another time that objects can be removed from the cache is when \code{get()} is
 called. If the target object is older than \code{max_age}, it will be removed
